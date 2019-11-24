@@ -1,0 +1,18 @@
+---
+- name: Puppet run
+  hosts: all
+  gather_facts: no
+  become: true
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: Puppet run
+      command: /path/to/puppet agent -t -v --detailed-exitcodes
+      register: puppet_agent
+      changed_when: puppet_agent.rc == 2
+      failed_when: puppet_agent.rc != 2 and puppet_agent.rc != 0
+  post_tasks:
+    - name: Sanity check
+      command: **path to sanity check**
+      when: puppet_agent is changed
+    - debug: var=puppet_agent.stdout_lines
