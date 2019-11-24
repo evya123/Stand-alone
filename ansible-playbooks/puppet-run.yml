@@ -13,6 +13,6 @@
       failed_when: puppet_agent.rc != 2 and puppet_agent.rc != 0
   post_tasks:
     - name: Sanity check
-      command: **path to sanity check**
+      command: /path/to/sanity
       when: puppet_agent is changed
     - debug: var=puppet_agent.stdout_lines
